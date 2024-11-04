@@ -59,7 +59,9 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+    return view('admin.projects.edit', compact('project'));
     }
 
     /**
@@ -67,7 +69,17 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+    $validatedData = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'url' => 'nullable|url',
+    ]);
+
+    $project->update($validatedData);
+
+    return redirect()->route('admin.projects.index')->with('success', 'Progetto aggiornato con successo!');
     }
 
     /**
@@ -75,6 +87,10 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+    $project->delete();
+
+    return redirect()->route('admin.projects.index')->with('success', 'Progetto eliminato con successo!');
     }
 }
