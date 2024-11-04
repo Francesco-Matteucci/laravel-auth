@@ -13,7 +13,14 @@
             <div class="card mb-4">
                 <div class="card-header">Progetti Recenti</div>
                 <div class="card-body">
-                    <p>Nessun progetto recente.</p>
+                    @forelse ($projects as $project)
+                        <h5>{{ $project->title }}</h5>
+                        <p>{{ $project->description }}</p>
+                        <a href="{{ $project->url }}" target="_blank">Visita il progetto</a>
+                        <hr>
+                    @empty
+                        <p>Non ci sono progetti al momento.</p>
+                    @endforelse
                 </div>
             </div>
         </div>
@@ -21,7 +28,7 @@
             <div class="card mb-4">
                 <div class="card-header">Statistiche</div>
                 <div class="card-body">
-                    <p>Nessun dato disponibile.</p>
+                    <p>Totale Progetti: {{ $projects->count() }}</p>
                 </div>
             </div>
         </div>
