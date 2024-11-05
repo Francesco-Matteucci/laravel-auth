@@ -6,8 +6,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 text-center my-4">
-            <h1>Benvenuto nel tuo Dashboard Portfolio</h1>
-            <p>Qui puoi gestire i tuoi progetti, visualizzare le statistiche e altro ancora.</p>
+            <h1>Benvenuto nel Portfolio</h1>
+            <p>Qui puoi visualizzare i progetti e le statistiche. Iscriviti per portare il tutto ad un livello superiore!</p>
         </div>
         <div class="col-md-6">
             <div class="card mb-4">
