@@ -4,6 +4,19 @@
 
 @section('content')
 <div class="container">
+    <!-- Sezione per messaggi di errore e successo -->
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-md-12 text-center my-4">
             <h1>Gestione dei Progetti</h1>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Project;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -13,30 +14,45 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        if (Auth::user()->is_admin) {
+            $projects = Project::all();
+            return view('admin.projects.index', compact('projects'));
+        }
 
-    return view('admin.projects.index', compact('projects'));
+        if (Auth::user()->is_moderator) {
+            $projects = Project::all();
+            return view('admin.projects.index', compact('projects'));
+        }
+
+
+        return redirect('/')->with('error', 'Accesso negato, non possiedi i privilegi adatti per questa funzione');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
-    {
-        return view('admin.projects.create');
+{
+    if (!Auth::user()->is_admin) {
+        return redirect()->route('admin.projects.index')->with('error', 'Accesso negato, non possiedi i privilegi adatti per questa funzione');
     }
+
+    return view('admin.projects.create');
+}
+
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        if (!Auth::user()->is_admin) {
+            return redirect()->route('admin.projects.index')->with('error', 'Accesso negato, non possiedi i privilegi adatti per questa funzione');
+        }
+
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'url' => 'nullable|url',
         ]);
-
 
         Project::create($validatedData);
 
@@ -71,6 +87,10 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
 
+    if (!Auth::user()->is_admin && !Auth::user()->is_moderator) {
+        return redirect()->route('admin.projects.index')->with('error', 'Accesso negato, non possiedi i privilegi adatti per questa funzione');
+    }
+
     $validatedData = $request->validate([
         'title' => 'required|string|max:255',
         'description' => 'nullable|string',
@@ -89,8 +109,12 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
 
-    $project->delete();
+        if (!Auth::user()->is_admin) {
+            return redirect()->route('admin.projects.index')->with('error', 'Accesso negato, non possiedi i privilegi adatti per questa funzione');
+        }
 
-    return redirect()->route('admin.projects.index')->with('success', 'Progetto eliminato con successo!');
+        $project->delete();
+
+        return redirect()->route('admin.projects.index')->with('success', 'Progetto eliminato con successo!');
     }
 }
