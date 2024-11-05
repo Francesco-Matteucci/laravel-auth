@@ -19,20 +19,20 @@
 
     <div class="row">
         <div class="col-md-12 text-center my-4">
-            <h1>Gestione dei Progetti</h1>
-            <p>Qui puoi visualizzare, modificare e eliminare i tuoi progetti.</p>
+            <h1 class="text-light">Gestione dei Progetti</h1>
+            <p class="text-light">Qui puoi visualizzare, modificare e eliminare i tuoi progetti.</p>
         </div>
         <div class="col-md-12">
             <a href="{{ route('admin.projects.create') }}" class="btn btn-primary mb-3">Crea Nuovo Progetto</a>
         </div>
         <div class="col-md-12">
-            <div class="card mb-4">
+            <div class="card mb-4 bg-dark text-light">
                 <div class="card-header">Elenco Progetti</div>
                 <div class="card-body">
                     @if($projects->isEmpty())
                         <p>Non ci sono progetti disponibili.</p>
                     @else
-                        <table class="table">
+                        <table class="table table-dark">
                             <thead>
                                 <tr>
                                     <th>ID</th>

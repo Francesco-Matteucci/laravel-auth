@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
+@section('title', 'Dettagli Progetto')
+
 @section('content')
 <div class="container">
-    <h1>Dettagli del Progetto: {{ $project->title }}</h1>
+    <h1 class="text-light">Dettagli del Progetto: {{ $project->title }}</h1>
 
-    <div class="card">
+    <div class="card bg-dark text-light">
         <div class="card-header">{{ $project->title }}</div>
         <div class="card-body">
             <h5 class="card-title">Descrizione</h5>
